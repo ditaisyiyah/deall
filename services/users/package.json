@@ -1,14 +1,14 @@
 {
   "name": "users",
   "version": "1.0.0",
-  "description": "",
+  "description": "this is service for user",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Dita Larasati",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
