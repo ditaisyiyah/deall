@@ -1,0 +1,85 @@
+version: "3.8"
+
+networks:
+  user-network:
+    name: user-network
+  refresh_token-network:
+    name: refresh_token-network
+  deall-network:
+    name: deall-network
+  app-network:
+    name: app-network
+
+volumes:
+  deall-mongo-volume:
+
+services:
+  mongo:
+    container_name: mongo
+    image: mongo:5.0
+    ports: 
+      - 27017:27017
+    networks:
+      - user-network
+      - refresh_token-network
+    volumes:
+      - deall-mongo-volume:/data/db
+  redis:
+    container_name: redis
+    image: redis:7.0
+    ports: 
+      - 6379:6379
+    networks:
+      - deall-network         
+  refresh_token:
+    container_name: refresh_token
+    image: refresh_token:1.0
+    ports: 
+      - 3001:3001
+    depends_on:
+      - mongo
+    environment:
+      - PORT=3001
+      - MONGO_HOST=mongo
+      - MONGO_PORT=27017
+    networks:
+      - refresh_token-network
+      - app-network
+  user:
+    container_name: user
+    image: user:1.0
+    ports: 
+      - 3002:3002
+    depends_on:
+      - mongo
+    environment:
+      - PORT=3002
+      - MONGO_HOST=mongo
+      - MONGO_PORT=27017
+    networks:
+      - user-network
+      - app-network
+  deall:
+    container_name: deall
+    image: deall:1.0
+    ports: 
+      - 3000:3000
+    depends_on:
+      - redis
+      - refresh_token
+      - user
+    environment:
+      - PORT=3000
+      - JWT_SECRET=adadech
+      - JWT_EXPIRED=1h
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_TTL=3600
+      - REFRESH_TOKEN_HOST=localhost
+      - REFRESH_TOKEN_PORT=3001
+      - USER_HOST=localhost
+      - USER_PORT=3002
+    networks:
+      - deall-network
+      - app-network
+      
