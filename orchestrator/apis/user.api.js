@@ -1,5 +1,5 @@
 const axios = require('axios');
 
-const { app: { userPort } } = require('../config/index')
+const { user: { host, port } } = require('../config/index')
 
-module.exports = axios.create({ baseURL: `http://localhost:${userPort}` })
+module.exports = axios.create({ baseURL: `http://${host}:${port}` })

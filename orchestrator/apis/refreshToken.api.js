@@ -1,5 +1,5 @@
 const axios = require('axios');
 
-const { app: { refreshTokenPort } } = require('../config/index')
+const { refreshToken: { host, port } } = require('../config/index')
 
-module.exports = axios.create({ baseURL: `http://localhost:${refreshTokenPort}` })
+module.exports = axios.create({ baseURL: `http://${host}:${port}` })

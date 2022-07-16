@@ -3,8 +3,14 @@ require('dotenv').config()
 module.exports = {
   app: { 
     port: process.env.PORT,
-    refreshTokenPort: process.env.REFRESH_TOKEN_PORT,
-    userPort: process.env.USER_PORT,
+  },
+  refreshToken: {
+    host: process.env.REFRESH_TOKEN_HOST,
+    port: process.env.REFRESH_TOKEN_PORT,
+  },
+  user: {
+    host: process.env.USER_HOST,
+    port: process.env.USER_PORT,
   },
   jwt: { 
     privateKey: process.env.JWT_SECRET,
