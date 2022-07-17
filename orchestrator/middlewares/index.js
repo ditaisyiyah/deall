@@ -1,5 +1,5 @@
 const Jwt = require('../utilities/jwt')
-const { redis } = require('../config/redis')
+// const { redis } = require('../config/redis')
 
 class Middleware {
   static async authentication(req, res, next) {
@@ -10,11 +10,11 @@ class Middleware {
         return res.status(401).send({ message: 'Oops! Looks like you are unauthorized 🤔' })
       }
 
-      const isLoggedIn = await redis.get(token)
+      // const isLoggedIn = await redis.get(token)
       
-      if (!isLoggedIn) {
-        return res.status(401).send({ message: 'Oops! Looks like you are unauthorized 🤔' })
-      }
+      // if (!isLoggedIn) {
+      //   return res.status(401).send({ message: 'Oops! Looks like you are unauthorized 🤔' })
+      // }
 
       const payload = Jwt.verify(token)
   

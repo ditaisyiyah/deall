@@ -1,4 +1,4 @@
-const { redis } = require('../config/redis')
+// const { redis } = require('../config/redis')
 
 const UserAPI = require('../apis/user.api')
 
@@ -88,7 +88,7 @@ class UsersController {
   }
 
   static async hello(_, res) {
-    await redis.set('hap', 'hap')
+    // await redis.set('hap', 'hap')
     const { data: result } = await UserAPI.get('/hello')
     return res.send(result)
   }

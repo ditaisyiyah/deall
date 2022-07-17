@@ -1,7 +1,7 @@
 const Bcrypt = require('../utilities/bcrypt')
 const Jwt = require('../utilities/jwt')
 
-const { redis } = require('../config/redis')
+// const { redis } = require('../config/redis')
 const config = require('../config/index')
 
 const UserAPI = require('../apis/user.api')
@@ -26,7 +26,7 @@ class AuthController {
       const accessToken = Jwt.sign({ userId: user._id, username, role: user.role })
       const { data: refreshToken } = await RefreshTokenAPI.post('/', { userId: user._id, username })
 
-      await redis.set(accessToken, accessToken, { EX: config.redis.ttl })
+      // await redis.set(accessToken, accessToken, { EX: config.redis.ttl })
 
       return res.send({ accessToken, refreshToken, message: 'Welcome! 😃' })
     } catch (error) {
@@ -56,10 +56,10 @@ class AuthController {
         return res.status(400).send({ message: 'Your refresh token is expired, please login again 😊' })
       }
       
-      await redis.del(token)
+      // await redis.del(token)
       const accessToken = Jwt.sign({ userId, username, role })
 
-      await redis.set(accessToken, accessToken, { EX: config.redis.ttl })
+      // await redis.set(accessToken, accessToken, { EX: config.redis.ttl })
       
       return res.send({ accessToken, message: 'Here is your new access token! 😀' })
     } catch (error) {
@@ -74,7 +74,7 @@ class AuthController {
       
       await RefreshTokenAPI.delete('/', { data: { userId, username } })
 
-      await redis.del(token)
+      // await redis.del(token)
       
       return res.send({ message: 'See you! 🤗' })
     } catch (error) {
@@ -83,7 +83,7 @@ class AuthController {
   }
 
   static async hello(_, res) {
-    await redis.set('hap', 'hap')
+    // await redis.set('hap', 'hap')
     const { data: result } = await RefreshTokenAPI.get('/hello')
     return res.send(result)
   }
