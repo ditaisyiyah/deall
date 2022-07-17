@@ -61,6 +61,8 @@ services:
       - app-network
   deall:
     container_name: deall
+    # use deall:2.0 to not ft redis cache
+    # do not forget command the redis related in this file
     image: deall:1.0
     ports: 
       - 3000:3000
@@ -75,9 +77,9 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_TTL=3600
-      - REFRESH_TOKEN_HOST=localhost
+      - REFRESH_TOKEN_HOST=refresh_token
       - REFRESH_TOKEN_PORT=3001
-      - USER_HOST=localhost
+      - USER_HOST=user
       - USER_PORT=3002
     networks:
       - deall-network
