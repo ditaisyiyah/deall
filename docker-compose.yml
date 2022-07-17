@@ -3,10 +3,10 @@ version: "3.8"
 networks:
   user-network:
     name: user-network
-  refresh_token-network:
-    name: refresh_token-network
-  deall-network:
-    name: deall-network
+  refresh-token-network:
+    name: refresh-token-network
+  # deall-network:
+  #   name: deall-network
   app-network:
     name: app-network
 
@@ -21,18 +21,18 @@ services:
       - 27017:27017
     networks:
       - user-network
-      - refresh_token-network
+      - refresh-token-network
     volumes:
       - deall-mongo-volume:/data/db
-  redis:
-    container_name: redis
-    image: redis:7.0
-    ports: 
-      - 6379:6379
-    networks:
-      - deall-network         
-  refresh_token:
-    container_name: refresh_token
+  # redis:
+  #   container_name: redis
+  #   image: redis:7.0
+  #   ports: 
+  #     - 6379:6379
+  #   networks:
+  #     - deall-network         
+  refresh-token:
+    container_name: refresh-token
     image: refresh_token:1.0
     ports: 
       - 3001:3001
@@ -43,7 +43,7 @@ services:
       - MONGO_HOST=mongo
       - MONGO_PORT=27017
     networks:
-      - refresh_token-network
+      - refresh-token-network
       - app-network
   user:
     container_name: user
@@ -61,27 +61,28 @@ services:
       - app-network
   deall:
     container_name: deall
-    # use deall:2.0 to not ft redis cache
-    # do not forget command the redis related in this file
-    image: deall:1.0
+    # use deall:2.0 (instead of deall:1.0) to not ft redis cache
+    # do not forget commant the redis related in this file
+    # and in the repo if you wanna test locally
+    image: deall:2.0
     ports: 
       - 3000:3000
     depends_on:
-      - redis
-      - refresh_token
+      # - redis
+      - refresh-token
       - user
     environment:
       - PORT=3000
       - JWT_SECRET=adadech
       - JWT_EXPIRED=1h
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - REDIS_TTL=3600
-      - REFRESH_TOKEN_HOST=refresh_token
-      - REFRESH_TOKEN_PORT=3001
+      # - REDIS_HOST=redis
+      # - REDIS_PORT=6379
+      # - REDIS_TTL=3600
+      - REFRESH-TOKEN_HOST=refresh-token
+      - REFRESH-TOKEN_PORT=3001
       - USER_HOST=user
       - USER_PORT=3002
     networks:
-      - deall-network
+      # - deall-network
       - app-network
       
