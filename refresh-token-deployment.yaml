@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: refresh-token
+  name: refresh-token
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: refresh-token
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/app-network: "true"
+        io.kompose.network/refresh-token-network: "true"
+        io.kompose.service: refresh-token
+    spec:
+      containers:
+        - env:
+            - name: MONGO_HOST
+              value: mongo
+            - name: MONGO_PORT
+              value: "27017"
+            - name: PORT
+              value: "3001"
+          image: refresh_token:1.0
+          name: refresh-token
+          ports:
+            - containerPort: 3001
+          resources: {}
+      restartPolicy: Always
+status: {}
