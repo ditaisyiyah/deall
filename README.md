@@ -4,7 +4,7 @@
 - MongoDB
 - Feature: simple authN/Z n CRUD user
 
-This repo include logout, refresh token, and redis cache.
+This repo include redis cache and logout
 
 Might be error as the containers run because I encounter ```ECONNREFUSED 127.0.0.1:6379```
 
