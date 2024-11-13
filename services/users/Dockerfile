@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:18-alpine
 
 # Create app directory
 WORKDIR /services/users
@@ -11,6 +11,6 @@ RUN npm install
 # Bundle app source
 COPY . /services/users
 
-ENV PORT 3002
+ENV PORT=3002
 
 CMD [ "node", "app.js" ]

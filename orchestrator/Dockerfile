@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:18-alpine
 
 # Create app directory
 WORKDIR /orchestrator
@@ -11,6 +11,6 @@ RUN npm install
 # Bundle app source
 COPY . /orchestrator
 
-ENV PORT 3000
+ENV PORT=3000
 
 CMD [ "node", "app.js" ]
