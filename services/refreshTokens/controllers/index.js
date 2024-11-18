@@ -11,7 +11,7 @@ class Controller {
     try {
       const { userId, username } = req.body
 
-      const newRefreshToken = uuidv4()
+      const newRefreshToken = new uuidv4()
       const expiredAt = new Date()
       expiredAt.setSeconds(expiredAt.getSeconds() + 600)
   
